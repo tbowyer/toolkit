@@ -1,41 +1,42 @@
-## Prerequisites
+## Running the Edgescan task
 
-This task will communicate with the Edgescan and Kenna APIs. In order to do so it will need the following pieces of information.
+This toolkit brings in data from Edgescan
 
-#### From Edgescan:
+To run this task you need the following information from Edgescan:
 
-- Edgescan API token
+1. Edgescan Token
+1. Kenna connector ID
 
-#### From Kenna:
+## Command Line
 
-- Kenna API key
-- Kenna connector ID
+See the main Toolkit for instructions on running tasks. For this task, if you leave off the Kenna API Key and Kenna Connector ID, the task will create a json file in the default or specified output directory. You can review the file before attempting to upload to the Kenna directly.
 
-## Running the task
+Recommended Steps:
 
-More in depth details about running the task are available [here](https://github.com/KennaSecurity/toolkit/blob/master/README.md).
-These are some quick examples:
+1. Run with Edgescan Keys only to ensure you are able to get data properly from the scanner
+1. Review output for expected data
+1. Create Kenna Data Importer connector in Kenna (example name: Edgescan KDI)
+1. Manually run the connector with the json from step 1
+1. Click on the name of the connector to get the connector id
+1. Run the task with Edgescan Keys and Kenna Key/connector id
 
-- To print a list of available options: `docker run -it --rm toolkit:latest task=edgescan help`
-- To sync all Edgescan data into Kenna: `docker run -it --rm toolkit:latest task=edgescan edgescan_token='abc' kenna_api_key='abc' kenna_connector_id=123`
+Complete list of Options:
 
-## List of available options
+| Option | Required | Description | default |
+| --- | --- | --- | --- |
+| edgescan_token | true | Edgescan Token | n/a |
+| edgescan_page_size | false | Edgescan page size | 100 |
+| edgescan_api_host | false | Edgescan API Hostname | live.edgescan.com |
+| kenna_api_key | false | Kenna API Key | n/a |
+| kenna_api_host | false | Kenna API Hostname | api.us.kennasecurity.com |
+| kenna_connector_id | true | Kenna connector ID | n/a |
+| output_directory | false | The task will write JSON files here (path is relative to /Users/mykola_ukhanskyi/Files/toolkit) | output/edgescan |
+| create_findings | false | The task will create findings, instead of vulnerabilities | n/a |
+| include_network_vulnerabilities | false | The task will include network layer vulnerabilities | true |
+| include_application_vulnerabilities | false | The task will include application layer vulnerabilities | true |
 
-> **Note:** You can also run `docker run -it --rm toolkit:latest task=edgescan help` to see this list in your console
+## Support
 
-| Option             | Required | Description                                                                  | default                  |
-| ------------------ | -------- | ---------------------------------------------------------------------------- | ------------------------ |
-| edgescan_token     | true     | Edgescan token                                                               | none                     |
-| edgescan_page_size | false    | Number of records to bring back with each page request from Edgescan         | 100                      |
-| edgescan_api_host  | false    | Edgescan API hostname                                                        | live.edgescan.com        |
-| kenna_api_key      | true     | Kenna API key                                                                | none                     |
-| kenna_connector_id | true     | Kenna connnector ID                                                          | none                     |
-| kenna_api_host     | false    | Kenna API hostname                                                           | api.us.kennasecurity.com |
-| output_directory   | false    | The task will write JSON files here (path is relative to the base directory) | output/edgescan          |
-| create_findings    | false    | The task will create findings, instead of vulnerabilities                    | false                    |
+All issues and inquiries relating to this toolkit implementation must contact Edgescan support.
 
-## For devs
-
-Pass in this env variable to make the task talk to `localhost:3000` instead of `live.edgescan.com`:
-
-- `EDGESCAN_ENVIRONMENT="local"`
+[comment]: <> (Please add preferred methods to contact Edgescan support.)
